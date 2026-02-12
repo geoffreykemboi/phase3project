@@ -1,10 +1,8 @@
-# phase3project_Machine_Learning
+# PHASE 3 MACHINE LEARNING PROJECT
 
-# Churn Prediction Project - README
+# Churn Prediction Project
 
-# Churn Prediction Project – README Report
-
-## Overview
+## Project Overview
 
 This project focuses on predicting customer churn using machine learning models. Churn prediction is a critical business objective because retaining existing customers is significantly more cost-effective than acquiring new ones. By identifying at-risk customers, the company can deploy targeted retention strategies, such as specialized discounts or loyalty programs, to maintain its revenue base and market share. This analysis compares a **Logistic Regression** baseline with a **Decision Tree Classifier** to determine the most effective approach for identifying customers likely to leave.
 
