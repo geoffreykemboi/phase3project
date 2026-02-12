@@ -1,39 +1,74 @@
-# phase3project
+# phase3project_Machine_Learning
 
-phase3project_regression_models_lasso_ridge
+# Churn Prediction Project - README
 
-Interpretation of the F1 score - model accuracy test
-Class 0 → “Not churn” (customers who stayed)
+# Churn Prediction Project – README Report
 
-- Precision = 0.88 → When the model predicts a customer will stay, it’s correct 88% of the time.
-- Recall = 0.97 → It successfully identifies 97% of the customers who actually stayed.
-- F1-score = 0.92 → Strong balance between precision and recall.
-- Support = 1425 → Out of 1667 customers, 1425 really did not churn.
-  The model is excellent at recognizing loyal customers.
+## Overview
 
-Class 1 → “Churn” (customers who left)
+This project focuses on predicting customer churn using machine learning models. Churn prediction is a critical business objective because retaining existing customers is significantly more cost-effective than acquiring new ones. By identifying at-risk customers, the company can deploy targeted retention strategies, such as specialized discounts or loyalty programs, to maintain its revenue base and market share. This analysis compares a **Logistic Regression** baseline with a **Decision Tree Classifier** to determine the most effective approach for identifying customers likely to leave.
 
-- Precision = 0.57 → When the model predicts churn, only 57% of those predictions are correct.
-- Recall = 0.21 → It only catches 21% of the actual churners — meaning most churners are missed.
-- F1-score = 0.31 → Weak balance, showing poor performance on churn detection.
-- Support = 242 → There were 242 actual churn cases.
-  The model struggles to detect churners, which is critical because these are the customers you want to retain.
+## Business and Data Understanding
 
-Overall
+### Stakeholder Audience
 
-- Accuracy = 0.86 → 86% of predictions are correct, but this is misleading because churners are a minority.
-- Macro avg (0.73 precision, 0.59 recall, 0.62 F1) → Treats both classes equally, showing the imbalance clearly.
-- Weighted avg (0.83 precision, 0.86 recall, 0.83 F1) → Weighted by class size, looks better because non-churn dominates.
+The primary stakeholders are the **Customer Success and Retention Teams**. These teams require a tool that flags customers who are likely to leave before they actually do. A predictive model allows them to transition from reactive support to proactive intervention.
 
-Business Interpretation
+### Dataset Choice
 
-- The model is biased toward predicting “not churn” because most customers stay.
-- It misses the majority of churners, which is dangerous: you’d fail to intervene with customers at risk of leaving.
-- In churn prediction, recall for class 1 (churn) is often more important than overall accuracy, because missing churners means lost revenue.
+The analysis uses the `ChurnInTelecom.csv` dataset, which contains 3,333 records of customer behavior.
 
-Next Steps to Improve Churn Detection
+- **Features:** Usage patterns (day/evening/night/intl minutes), account details (account length, international plan, voice mail plan), and customer service interactions.
+- **Target Variable (`churn`):** \* **Class 0:** Not churned (customers who stayed)
+- **Class 1:** Churned (customers who left)
 
-- Resampling techniques: Oversample churners (SMOTE) or undersample non-churners.
-- Class weights: Penalize misclassifying churn more heavily in the model.
-- Alternative metrics: Focus on ROC-AUC, precision-recall curves, or recall for churn rather than accuracy.
-- Feature engineering: Add stronger predictors of churn (usage patterns, complaints, tenure, etc.).
+- **Challenge:** The dataset is imbalanced (approximately churn rate). This makes identifying the minority class (churners) more difficult, requiring a focus on metrics beyond simple accuracy.
+
+## Modeling
+
+The project followed an iterative approach to classification:
+
+1. **Logistic Regression:** A linear model used as a baseline. It provides high interpretability regarding how each feature (like service calls) increases or decreases the log-odds of churn.
+2. **Decision Tree Classifier:** A non-linear model that splits data into decision rules. This model is capable of capturing complex interactions between features that a linear model might miss.
+
+Both models were trained on the same prepared dataset to ensure a fair comparison of their predictive capabilities.
+
+## Evaluation
+
+The performance of both models was evaluated using **Precision**, **Recall**, and the **F1-score**. In this business context, **Recall** is a critical metric because failing to identify a churner (a "False Negative") results in lost revenue that is harder to recover than the cost of a retention offer.
+
+Based on the final testing, both models achieved identical performance metrics:
+
+### Performance Metrics (Both Models)
+
+- **Precision (71.88):**
+- **Recall (65.90):**
+- **F1-Score (68.76):**
+
+### Interpretation
+
+- **Precision (71.88):** When the model flags a customer as a churn risk, there is a chance they are actually planning to leave.
+- **Recall (65.90):** The model successfully identifies of all customers who actually churn.
+- **F1-Score (68.76):** This represents a strong balance between precision and recall, ensuring the model is reliable for business deployment.
+
+## Conclusion
+
+### Rationale
+
+Both the Logistic Regression and Decision Tree models provided a significant improvement over a majority-class baseline. With a recall of , the business can now proactively reach out to nearly two-thirds of all at-risk customers.
+
+### Results
+
+The models demonstrated consistent predictive power. While Logistic Regression offers a clear mathematical view of feature influence, the Decision Tree provides a rule-based logic that is often easier to explain to non-technical stakeholders (e.g., "If calls and usage is high, then Churn").
+
+### Limitations
+
+- **Class Imbalance:** While the models perform well, the underlying imbalance in the data means there is still room to improve the detection of the minority class.
+- **Thresholding:** These results are based on a standard probability threshold. Adjusting this threshold could potentially increase recall at the expense of precision.
+
+### Recommendations
+
+1. **Deploy the Decision Tree Model:** Given its equivalent performance and intuitive rule-based structure, the Decision Tree is recommended for its transparency in explaining "why" a customer is at risk.
+2. **Focus on High-Impact Features:** Prioritize retention efforts on customers showing high day-time usage and those who have made multiple customer service calls.
+3. **Implement Automated Flagging:** Integrate the model's predictions into the CRM dashboard to alert account managers in real-time.
+4. **Future Work:** Explore ensemble methods like **Random Forest** or **XGBoost** to see if the recall can be pushed higher without significantly degrading precision.
